@@ -18,8 +18,8 @@ import {v4 as uuid} from 'uuid';
 
 const HeroesAddForm = () => {
 
-    const {filters, filtersLoadingStatus} = useSelector(state => state);
-    const {heroes, heroesLoadingStatus} = useSelector(state => state);
+    const {filters, filtersLoadingStatus} = useSelector(state => state.filters);
+    const {heroes, heroesLoadingStatus} = useSelector(state => state.heroes);
     const dispatch = useDispatch();
     const {request} = useHttp();
 
