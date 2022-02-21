@@ -1,12 +1,6 @@
 {
   "heroes": [
     {
-      "id": 1,
-      "name": "Первый герой",
-      "description": "Первый герой в рейтинге!",
-      "element": "fire"
-    },
-    {
       "id": 2,
       "name": "Неизвестный герой",
       "description": "Скрывающийся в тени",
@@ -29,13 +23,39 @@
       "name": "Asko",
       "description": "Super Puper Kusochishe",
       "element": ""
+    },
+    {
+      "id": "6e6f7eb3-f459-4e54-822b-e9ca55bf3f3e",
+      "name": "Kemosh",
+      "description": "Tamojniy",
+      "element": "wind"
     }
   ],
   "filters": [
-    "all",
-    "fire",
-    "water",
-    "wind",
-    "earth"
+    {
+      "name": "all",
+      "label": "Все",
+      "className": "btn-outlet-dark"
+    },
+    {
+      "name": "fire",
+      "label": "Огонь",
+      "className": "btn-danger"
+    },
+    {
+      "name": "water",
+      "label": "Вода",
+      "className": "btn-primary"
+    },
+    {
+      "name": "wind",
+      "label": "Ветер",
+      "className": "btn-success"
+    },
+    {
+      "name": "earth",
+      "label": "Земля",
+      "className": "btn-secondary"
+    }
   ]
 }

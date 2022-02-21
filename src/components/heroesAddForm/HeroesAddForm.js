@@ -18,6 +18,7 @@ import {v4 as uuid} from 'uuid';
 
 const HeroesAddForm = () => {
 
+    const {filters, filtersLoadingStatus} = useSelector(state => state);
     const {heroes, heroesLoadingStatus} = useSelector(state => state);
     const dispatch = useDispatch();
     const {request} = useHttp();
@@ -30,8 +31,27 @@ const HeroesAddForm = () => {
 
         request("http://localhost:3001/heroes", "POST", JSON.stringify(data))
             .catch(() => dispatch(heroesFetchingError()))
-
+        
         return newHeroes;
+    }
+
+    const renderFilters = (filters, status) => {
+        if (status === "loading") {
+            return <option>Загрузка элементов</option>
+        } else if (status === "error") {
+            return <option>Ошибка загрузки</option>
+        }
+        
+        // Если фильтры есть, то рендерим их
+        if (filters && filters.length > 0 ) {
+            return filters.map(({name, label}) => {
+                // Один из фильтров нам тут не нужен
+                // eslint-disable-next-line
+                if (name === 'all')  return;
+
+                return <option key={name} value={name}>{label}</option>
+            })
+        }
     }
 
     return (
@@ -43,8 +63,9 @@ const HeroesAddForm = () => {
                 element: '',
                 
             }}
-            onSubmit = {(data) => {
+            onSubmit = {(data, {setSubmitting, resetForm}) => {
                 dispatch(addHero(addHeroSubmit(data)))
+                resetForm();
             }}
             >
             <Form className="border p-4 shadow-lg rounded">
@@ -80,10 +101,7 @@ const HeroesAddForm = () => {
                     id="element" 
                     name="element">
                     <option >Я владею элементом...</option>
-                    <option value="fire">Огонь</option>
-                    <option value="water">Вода</option>
-                    <option value="wind">Ветер</option>
-                    <option value="earth">Земля</option>
+                    {renderFilters(filters, filtersLoadingStatus)}
                 </Field>
             </div>
 
