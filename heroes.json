@@ -1,18 +1,6 @@
 {
   "heroes": [
     {
-      "id": 2,
-      "name": "Неизвестный герой",
-      "description": "Скрывающийся в тени",
-      "element": "wind"
-    },
-    {
-      "id": 3,
-      "name": "Морской герой",
-      "description": "Как аквамен, но не из DC",
-      "element": "water"
-    },
-    {
       "id": "2932b587-409d-4899-8d52-3a89439f6d49",
       "name": "Mustafa",
       "description": "Super Duper Genius",

@@ -1,38 +1,36 @@
 import {useHttp} from '../../hooks/http.hook';
-import {useDispatch, useSelector} from 'react-redux';
-import {addHero, heroesFetchingError} from '../../actions';
-import {Formik, Form, Field} from "formik";
-import {v4 as uuid} from 'uuid';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
 
-
-
-// Задача для этого компонента:
-// Реализовать создание нового героя с введенными данными. Он должен попадать
-// в общее состояние и отображаться в списке + фильтроваться
-// Уникальный идентификатор персонажа можно сгенерировать через uiid
-// Усложненная задача:
-// Персонаж создается и в файле json при помощи метода POST
-// Дополнительно:
-// Элементы <option></option> желательно сформировать на базе
-// данных из фильтров
+import { heroCreated } from '../../actions';
 
 const HeroesAddForm = () => {
+    const [heroName, setHeroName] = useState('');
+    const [heroDescr, setHeroDescr] = useState('');
+    const [heroElement, setHeroElement] = useState('');
 
     const {filters, filtersLoadingStatus} = useSelector(state => state.filters);
-    const {heroes, heroesLoadingStatus} = useSelector(state => state.heroes);
     const dispatch = useDispatch();
     const {request} = useHttp();
 
-    const addHeroSubmit = (data) => {
+    const onSubmitHandler = (e) => {
+        e.preventDefault();
+        const newHero = {
+            id: uuidv4(),
+            name: heroName,
+            description: heroDescr,
+            element: heroElement
+        }
 
-        data.id = uuid();
-        let newHeroes = heroes;
-        newHeroes.push(data);
+        request("http://localhost:3001/heroes", "POST", JSON.stringify(newHero))
+            .then(res => console.log(res, 'Отправка успешна'))
+            .then(dispatch(heroCreated(newHero)))
+            .catch(err => console.log(err));
 
-        request("http://localhost:3001/heroes", "POST", JSON.stringify(data))
-            .catch(() => dispatch(heroesFetchingError()))
-        
-        return newHeroes;
+        setHeroName('');
+        setHeroDescr('');
+        setHeroElement('');
     }
 
     const renderFilters = (filters, status) => {
@@ -42,10 +40,8 @@ const HeroesAddForm = () => {
             return <option>Ошибка загрузки</option>
         }
         
-        // Если фильтры есть, то рендерим их
         if (filters && filters.length > 0 ) {
             return filters.map(({name, label}) => {
-                // Один из фильтров нам тут не нужен
                 // eslint-disable-next-line
                 if (name === 'all')  return;
 
@@ -55,59 +51,49 @@ const HeroesAddForm = () => {
     }
 
     return (
-        <Formik
-            initialValues = {{
-                id: '',
-                name: '',
-                description: '',
-                element: '',
-                
-            }}
-            onSubmit = {(data, {setSubmitting, resetForm}) => {
-                dispatch(addHero(addHeroSubmit(data)))
-                resetForm();
-            }}
-            >
-            <Form className="border p-4 shadow-lg rounded">
+        <form className="border p-4 shadow-lg rounded" onSubmit={onSubmitHandler}>
             <div className="mb-3">
                 <label htmlFor="name" className="form-label fs-4">Имя нового героя</label>
-                <Field 
+                <input 
                     required
                     type="text" 
                     name="name" 
                     className="form-control" 
                     id="name" 
-                    placeholder="Как меня зовут?"/>
+                    placeholder="Как меня зовут?"
+                    value={heroName}
+                    onChange={(e) => setHeroName(e.target.value)}/>
             </div>
 
             <div className="mb-3">
                 <label htmlFor="text" className="form-label fs-4">Описание</label>
-                <Field
+                <textarea
                     required
-                    as="textarea"
-                    name="description" 
+                    name="text" 
                     className="form-control" 
                     id="text" 
                     placeholder="Что я умею?"
-                    style={{"height": '130px'}}/>
+                    style={{"height": '130px'}}
+                    value={heroDescr}
+                    onChange={(e) => setHeroDescr(e.target.value)}/>
             </div>
 
             <div className="mb-3">
                 <label htmlFor="element" className="form-label">Выбрать элемент героя</label>
-                <Field 
+                <select 
                     required
-                    as="select"
                     className="form-select" 
                     id="element" 
-                    name="element">
-                    <option >Я владею элементом...</option>
+                    name="element"
+                    value={heroElement}
+                    onChange={(e) => setHeroElement(e.target.value)}>
+                    <option value="">Я владею элементом...</option>
                     {renderFilters(filters, filtersLoadingStatus)}
-                </Field>
+                </select>
             </div>
 
             <button type="submit" className="btn btn-primary">Создать</button>
-        </Form>
-        </Formik>
+        </form>
     )
 }
 
