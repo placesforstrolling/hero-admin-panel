@@ -1,6 +1,24 @@
 {
   "heroes": [
     {
+      "id": 1,
+      "name": "Первый герой",
+      "description": "Первый герой в рейтинге!",
+      "element": "fire"
+    },
+    {
+      "id": 2,
+      "name": "Неизвестный герой",
+      "description": "Скрывающийся в тени",
+      "element": "wind"
+    },
+    {
+      "id": 3,
+      "name": "Морской герой",
+      "description": "Как аквамен, но не из DC",
+      "element": "water"
+    },
+    {
       "id": "2932b587-409d-4899-8d52-3a89439f6d49",
       "name": "Mustafa",
       "description": "Super Duper Genius",
@@ -21,29 +39,35 @@
   ],
   "filters": [
     {
+      "id": "all",
       "name": "all",
       "label": "Все",
-      "className": "btn-outlet-dark"
-    },
-    {
+      "className": "btn-outlet-dark" 
+     },
+     {
+      "id": "fire",
       "name": "fire",
       "label": "Огонь",
-      "className": "btn-danger"
-    },
-    {
+      "className": "btn-danger" 
+     },
+     {
+      "id": "water",
       "name": "water",
       "label": "Вода",
-      "className": "btn-primary"
-    },
-    {
+      "className": "btn-primary" 
+     },
+     {
+      "id": "wind",
       "name": "wind",
       "label": "Ветер",
-      "className": "btn-success"
-    },
-    {
+      "className": "btn-success" 
+     },
+     {
+      "id": "earth",
       "name": "earth",
       "label": "Земля",
-      "className": "btn-secondary"
-    }
+      "className": "btn-secondary" 
+     }
+     
   ]
 }
