@@ -29,12 +29,6 @@
       "name": "Asko",
       "description": "Super Puper Kusochishe",
       "element": ""
-    },
-    {
-      "id": "6e6f7eb3-f459-4e54-822b-e9ca55bf3f3e",
-      "name": "Kemosh",
-      "description": "Tamojniy",
-      "element": "wind"
     }
   ],
   "filters": [
@@ -42,32 +36,31 @@
       "id": "all",
       "name": "all",
       "label": "Все",
-      "className": "btn-outlet-dark" 
-     },
-     {
+      "className": "btn-outlet-dark"
+    },
+    {
       "id": "fire",
       "name": "fire",
       "label": "Огонь",
-      "className": "btn-danger" 
-     },
-     {
+      "className": "btn-danger"
+    },
+    {
       "id": "water",
       "name": "water",
       "label": "Вода",
-      "className": "btn-primary" 
-     },
-     {
+      "className": "btn-primary"
+    },
+    {
       "id": "wind",
       "name": "wind",
       "label": "Ветер",
-      "className": "btn-success" 
-     },
-     {
+      "className": "btn-success"
+    },
+    {
       "id": "earth",
       "name": "earth",
       "label": "Земля",
-      "className": "btn-secondary" 
-     }
-     
+      "className": "btn-secondary"
+    }
   ]
 }
